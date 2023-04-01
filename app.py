@@ -17,16 +17,24 @@ def front():
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
-    if request.method == 'POST' and 'file' in request.files:
-        image_file = request.files['file']
+    if 'file' not in request.files:
+        return jsonify({'error': 'no file uploaded'})
 
+    image_file = request.files['file']
+
+    if image_file.filename == '':
+        return jsonify({'error': 'empty filename'})
+
+    try:
         image = preprocess(image_file)
+    except:
+        return jsonify({'error': 'could not preprocess image'})
 
-        prediction = model.predict(image)
+    prediction = model.predict(image)
 
-        response = {'result': classes[np.argmax(prediction)]}
+    response = {'result': classes[np.argmax(prediction)]}
 
-        return jsonify(response)
+    return jsonify(response)
 
 def preprocess(image_file):
     image = Image.open(BytesIO(image_file.read()))
