@@ -36,7 +36,6 @@
             </div>
         </form>
         <div id="result"></div>
-        <div id="error"></div>
         <script>
             const form = document.querySelector('form');
             form.addEventListener('submit', async (e) => {
@@ -49,10 +48,6 @@
                 const data = await response.json();
                 const resultElement = document.getElementById('result');
                 resultElement.innerHTML = `Prediction: ${data.result}`;
-                const data2 = await e.json();
-                const resultElement = document.getElementById('error');
-                resultElement.innerHTML = `Error: ${data2.result}`;
-                
             });
         </script>
     </div>
