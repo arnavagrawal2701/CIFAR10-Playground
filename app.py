@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, redirect
+from flask import Flask, jsonify, request, render_template
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -17,27 +17,16 @@ def front():
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
-    if 'file' not in request.files:
-        e={'error': 'no file uploaded'}
-        return jsonify(e)
+    if request.method == 'POST' and 'file' in request.files:
+        image_file = request.files['file']
 
-    image_file = request.files['file']
-
-    if image_file.filename == '':
-        e={'error': 'empty filename'}
-        return jsonify(e)
-
-    try:
         image = preprocess(image_file)
-    except:
-        e={'error': 'could not preprocess image'}
-        return jsonify(e)
 
-    prediction = model.predict(image)
+        prediction = model.predict(image)
 
-    response = {'result': classes[np.argmax(prediction)]}
+        response = {'result': classes[np.argmax(prediction)]}
 
-    return jsonify(response)
+        return jsonify(response)
 
 def preprocess(image_file):
     image = Image.open(BytesIO(image_file.read()))
