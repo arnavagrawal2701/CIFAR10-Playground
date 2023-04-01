@@ -18,17 +18,20 @@ def front():
 @app.route('/predict',methods=['GET','POST'])
 def predict():
     if 'file' not in request.files:
-        return jsonify({'error': 'no file uploaded'})
+        e={'error': 'no file uploaded'}
+        return jsonify(e)
 
     image_file = request.files['file']
 
     if image_file.filename == '':
-        return jsonify({'error': 'empty filename'})
+        e={'error': 'empty filename'}
+        return jsonify(e)
 
     try:
         image = preprocess(image_file)
     except:
-        return jsonify({'error': 'could not preprocess image'})
+        e={'error': 'could not preprocess image'}
+        return jsonify(e)
 
     prediction = model.predict(image)
 
