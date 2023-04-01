@@ -28,7 +28,7 @@ def predict():
         return jsonify(response)
 
 def preprocess(image_file):
-    image = tf.keras.preprocessing.image.load_img(io.BytesIO(image_file.read()), target_size=(32,32))
+    image = tf.keras.preprocessing.image.load_img(image_file.read(), target_size=(32,32))
     
     image = tf.keras.preprocessing.image.img_to_array(image)
 
