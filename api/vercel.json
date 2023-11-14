@@ -1,0 +1,24 @@
+{
+    "functions": {
+      "api/app": {
+        "runtime": "python3.11.4",
+        "maxDuration": 10
+      }
+    },
+    "routes": [
+      {
+        "src": "/predict",
+        "dest": "/api/app"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/api/app"
+      }
+    ],
+    "builds": [
+      {
+        "src": "api/**",
+        "use": "@vercel/python"
+      }
+    ]
+}  
