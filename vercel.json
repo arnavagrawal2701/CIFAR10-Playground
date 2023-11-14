@@ -3,7 +3,6 @@
     { "src": "/predict", "dest": "/api/app" },
     { "src": "/(.*)", "dest": "/api/app" }
   ],
-  "cleanUrls": true,
   "builds": [
     { "src": "api/**", "use": "@vercel/python" }
   ]
