@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 
-model = keras.models.load_model('cifar10.h5')
+model = keras.models.load_model('api/cifar10.h5')
 
 app = Flask(__name__)
 
